@@ -1,13 +1,23 @@
-const express= require("express");
 
 
-const app= express();
+
+const express = require('express');
+const cookieParser= require('cookie-parser');
+const {authenticateToken}= require('./middlewares/auth')
 
 
-app.get("/",(req,res)=>{
-    res.send("welcome to API Gateway");
-})
+const app = express();
 
-app.listen(3000,()=>{
-    console.log("API Gateway running on port 3000");
-})
+app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(cookieParser());
+
+
+
+app.get('/health', authenticateToken, (req, res) => {
+  res.json({ status: 'ok', service: 'api-gateway' });
+});
+
+app.listen(3000, () => {
+  console.log('api-gateway running on port 3000');
+ })
