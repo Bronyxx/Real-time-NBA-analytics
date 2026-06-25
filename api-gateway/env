@@ -1,2 +1,3 @@
 JWT_ACCESS_SECRET= "12345"
 serviceTimeout=6*1000
+REDIS_URL=" "
