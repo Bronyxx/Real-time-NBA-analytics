@@ -1,16 +1,25 @@
 {
   "name": "player-service",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "bcrypt": "^6.0.0",
+    "crypto": "^1.0.1",
     "express": "^5.2.1",
-    "nodemon": "^3.1.14"
+    "helmet": "^8.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "nodemon": "^3.1.14",
+    "pg": "^8.22.0",
+    "prisma": "^7.8.0",
+    "winston": "^3.19.0"
   }
 }
