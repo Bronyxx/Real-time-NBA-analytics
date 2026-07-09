@@ -1,6 +1,6 @@
 const express= require("express")
 const helmet = require("helmet")
-const logger=require("./middlewares/logger")
+const logger=require("./config/logger")
 const bcrypt = require('bcrypt');
 
 const app= express()
