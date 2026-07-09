@@ -7,11 +7,11 @@ exports.hashtoken=(refreshToken)=>{
     return crypto.createHash('sha256').update(refreshToken).digest('hex');
 }
 
-exports.generateacessToken=(userId)=>{
+exports.generateAccessToken=(userId)=>{
     const payload={ 
         id:userId
     }
-return jwt.sign(payload,config.JWT_ACCESSTOKEN_SECRET,{expiresIn: config.JWT_ACCESSTOKEN_EXP})
+return jwt.sign(payload,config.JWT_ACCESS_SECRET,{expiresIn: config.ACCESS_TOKEN_EXP})
 }
 
 exports.generateRefreshToken=(userId)=>{
@@ -19,13 +19,13 @@ exports.generateRefreshToken=(userId)=>{
         id:userId,
         jti:crypto.randomUUID()
     }
-    return jwt.sign(payload,config.JWT_REFRESHTOKEN_SECRET,{expiresIn:config.JWT_REFRESHTOKEN_EXP})
+    return jwt.sign(payload,config.JWT_REFRESH_SECRET,{expiresIn:config.REFRESH_TOKEN_EXP})
 }
 
-exports.verifyAcessToken=(accessToken)=>{
-    return jwt.verify(accessToken,config.JWT_ACCESSTOKEN_SECRET);
+exports.verifyAccessToken=(accessToken)=>{
+    return jwt.verify(accessToken,config.JWT_ACCESS_SECRET);
 }
 
 exports.verifyRefreshToken= (refreshToken)=>{
-    return jwt.verify(refreshToken,config.JWT_REFRESHTOKEN_SECRET);
+    return jwt.verify(refreshToken,config.JWT_REFRESH_SECRET);
 }
