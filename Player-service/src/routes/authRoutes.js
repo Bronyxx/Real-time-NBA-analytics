@@ -1,5 +1,5 @@
 const express = require('express');
-const{signup,login,rotateRefreshToken}=require('../services/auth.js')
+const{signup,login,rotateRefreshToken}=require('../controllers/authControllers.js')
 const router = express.Router();
 
 router.post('/signup', signup)

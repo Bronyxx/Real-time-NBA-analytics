@@ -39,16 +39,16 @@ const signup= async(email,name,password)=>{
     if(existingUser){
         logger.info(`user with this email already exists`)
         throw new ConflictError("User already exists", "USER_EXISTS");
+       
     }
     //if no user create new user
     const saltRounds=10
     const hashedPassword= await bcrypt.hash(password, saltRounds)
     const user = await prisma.user.create({
           data: {
-               firstName: name,
+               name: name,
                email: email,
                password: hashedPassword,
-               emailVerified: true
           }
         
         })
