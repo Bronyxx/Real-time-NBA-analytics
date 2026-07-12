@@ -1,6 +1,7 @@
 const axios = require('axios');
 const  config  = require('../config');
 const logger= require('../config/logger');
+const { ServiceUnavailableError, GatewayTimeoutError } = require('../utils/error');
 
 
 
@@ -80,19 +81,16 @@ const forwardRequest= async(serviceUrl, path, method, data, headers,)=>{
   const configRequest={
     method,
     url,
-    serviceTimeout=config.serviceTimeout,
+    timeout: config.serviceTimeout,
     headers: {
         ...headers,
         'content-length':undefined,
         host: undefined,
-        validateStatus=()=>{
+         },
+    validateStatus:()=>{
             return true;
         },
         maxRedirects:5,
-
-
-
-    }
 
 
   }
@@ -104,7 +102,7 @@ const forwardRequest= async(serviceUrl, path, method, data, headers,)=>{
     configRequest.params=data;
   }
   logger.debug(`Forwarding ${method} ${url}`, {
-          headers: requestConfig.headers,
+          headers: configRequest.headers,
           hasData: !!data,
           timeout: config.SERVICE_TIMEOUT_MS,
      });
@@ -132,10 +130,10 @@ const forwardRequest= async(serviceUrl, path, method, data, headers,)=>{
                timeout: config.SERVICE_TIMEOUT_MS,
           });
         if (err.code === 'ECONNABORTED' || err.code === 'ETIMEDOUT') {
-               res.status(504).json({error:"Gateway service Timeout"})
+               throw new GatewayTimeoutError(`Request to ${serviceUrl} timed out after ${config.SERVICE_TIMEOUT_MS}ms`);
           }
         if (err.code === 'ECONNREFUSED') {
-              res.status(503).json({error:"service unavailable"})
+             throw new ServiceUnavailableError(`Cannot connect to ${serviceUrl}. Service may be down.`);
           }
 
  if (err.response) {
@@ -164,6 +162,13 @@ const forwardRequest= async(serviceUrl, path, method, data, headers,)=>{
           try {
               
                logger.info(req.path);
+              logger.info({
+               baseUrl: req.baseUrl,
+               path: req.path,
+               originalUrl: req.originalUrl,
+               url: req.url
+          });
+               
                const pathParts = req.path.split('/').filter(Boolean);
                logger.info(pathParts);
                
