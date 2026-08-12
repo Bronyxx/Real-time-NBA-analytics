@@ -1,0 +1,1 @@
+DATABASE_URL:process.env.DATABASE_URL || "postgresql://postgres:1234@localhost:5432/notification_db"
