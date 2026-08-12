@@ -13,12 +13,12 @@ const cookieOptions = (maxAge) => ({
      maxAge,
 });
 
-exports.signUp= asyncHandler(async(req, res) =>{
-    const {name,email,password}=req.body;
+exports.signup= asyncHandler(async(req, res) =>{
+    const {email,name,password}=req.body;
     if(!name || ! email || !password){
         return res.status(400).json({message: " All credentials are required"})
     }
-    const{accessToken,refreshToken,user}=await authService.signup(name,email,password)
+    const{accessToken,refreshToken,user}=await authService.signup(email,name,password)
      res.cookie("accessToken", accessToken, cookieOptions(config.ACCESS_TOKEN_EXP_SEC * 1000))
      res.cookie("refreshToken", refreshToken, cookieOptions(config.REFRESH_TOKEN_EXP_SEC * 1000))
      .status(200).json({
