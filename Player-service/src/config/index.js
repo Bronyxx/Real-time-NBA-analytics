@@ -6,7 +6,8 @@
   ACCESS_TOKEN_EXP_SEC: Number(process.env.ACCESS_TOKEN_EXP_SEC || 900),
   REFRESH_TOKEN_EXP_SEC: Number(process.env.REFRESH_TOKEN_EXP_SEC || 604800),
   REDIS_USER_TTL: Number(process.env.REDIS_USER_TTL || 86400),
-
+  REDIS_GAMES_TTL: Number(process.env.REDIS_GAMES_TTL || 5300),
+  BALLDONTLIE_API_KEY: process.env.BALLDONTLIE_API_KEY || "95bfaca0-2dd2-435c-b7e6-c1b2ce04e2b4",
 
   DATABASE_URL: process.env.DATABASE_URL,
   REDIS_URL: process.env.REDIS_URL,
